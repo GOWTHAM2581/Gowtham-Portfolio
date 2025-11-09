@@ -13,13 +13,13 @@ export default function Services() {
       title: "Web Design",
       description:
         "Designing modern, responsive websites with creative layouts and seamless interactions.",
-      image: "/webd.jpg",
+      image: "/webd.png",
     },
     {
       title: "Full Stack Development",
       description:
         "Building complete end-to-end web solutions using MERN stack with optimized performance.",
-      image: "/fulls.jpg",
+      image: "/fulls.png",
     },
   ];
 

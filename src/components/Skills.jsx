@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SiGithubactions } from "react-icons/si";
+import { SiGithubactions, SiPostman } from "react-icons/si";
 import { TbCloudLock, TbBrandAws, TbDatabase } from "react-icons/tb";
 import {
   FaJava,
@@ -29,28 +29,45 @@ import {
   SiAwslambda,
   SiAmazoncloudwatch,
 } from "react-icons/si";
+import { IoChevronForward } from "react-icons/io5"; // new arrow icon
 
 export default function Skills() {
   const [activeCategory, setActiveCategory] = useState(null);
+  const [hoveredCategory, setHoveredCategory] = useState(null);
 
   const skillCategories = [
+    {
+      title: "Frontend Development",
+      skills: [
+        { name: "React JS", icon: <FaReact /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+        { name: "HTML", icon: <FaHtml5 /> },
+        { name: "CSS", icon: <FaCss3Alt /> },
+        { name: "JavaScript", icon: <FaJsSquare /> },
+        { name: "Bootstrap", icon: <FaBootstrap /> },
+        { name: "DaisyUI", icon: <SiDaisyui /> },
+      ],
+    },
+    {
+      title: "Cloud & DevOps",
+      skills: [
+        { name: "AWS", icon: <FaAws /> },
+        { name: "EC2", icon: <TbBrandAws /> },
+        { name: "S3", icon: <TbCloudLock /> },
+        { name: "IAM", icon: <TbCloudLock /> },
+        { name: "RDS", icon: <SiAmazonrds /> },
+        { name: "DynamoDB", icon: <TbDatabase /> },
+        { name: "Lambda", icon: <SiAwslambda /> },
+        { name: "CloudWatch", icon: <SiAmazoncloudwatch /> },
+        { name: "Docker", icon: <FaDocker /> },
+        { name: "CI/CD", icon: <SiGithubactions /> },
+      ],
+    },
     {
       title: "Programming Languages",
       skills: [
         { name: "Java", icon: <FaJava /> },
         { name: "Python", icon: <FaPython /> },
-      ],
-    },
-    {
-      title: "Frontend Development",
-      skills: [
-        { name: "HTML", icon: <FaHtml5 /> },
-        { name: "CSS", icon: <FaCss3Alt /> },
-        { name: "JavaScript", icon: <FaJsSquare /> },
-        { name: "Bootstrap", icon: <FaBootstrap /> },
-        { name: "Tailwind CSS", icon: <SiTailwindcss /> },
-        { name: "DaisyUI", icon: <SiDaisyui /> },
-        { name: "React JS", icon: <FaReact /> },
       ],
     },
     {
@@ -77,45 +94,17 @@ export default function Skills() {
       ],
     },
     {
-      title: "Cloud & DevOps",
-      skills: [
-        { name: "AWS", icon: <FaAws /> },
-        { name: "EC2", icon: <TbBrandAws /> },
-        { name: "S3", icon: <TbCloudLock /> },
-        { name: "IAM", icon: <TbCloudLock /> },
-        { name: "RDS", icon: <SiAmazonrds /> },
-        { name: "DynamoDB", icon: <TbDatabase /> },
-        { name: "Lambda", icon: <SiAwslambda /> },
-        { name: "CloudWatch", icon: <SiAmazoncloudwatch /> },
-        { name: "Docker", icon: <FaDocker /> },
-        { name: "CI/CD", icon: <SiGithubactions /> },
-      ],
-    },
-    {
       title: "Version Control & Collaboration",
       skills: [
         { name: "Git", icon: <FaGitAlt /> },
         { name: "GitHub", icon: <FaGithub /> },
+        { name: "Postman", icon: <SiPostman /> },
       ],
     },
   ];
 
-  const handleHover = (category) => {
-    if (activeCategory !== category) {
-      setActiveCategory(category);
-    }
-  };
-
-  const handleLeave = (category) => {
-    // Only collapse on hover out if not clicked
-    if (activeCategory === category) {
-      setActiveCategory(null);
-    }
-  };
-
-  const handleClick = (category) => {
+  const handleClick = (category) =>
     setActiveCategory((prev) => (prev === category ? null : category));
-  };
 
   return (
     <section
@@ -133,52 +122,61 @@ export default function Skills() {
       </div>
 
       <div className="flex flex-col items-center gap-6">
-        {skillCategories.map((category, index) => (
-          <div
-            key={index}
-            className="w-full max-w-5xl border border-[#1E293B]/80 bg-[#1E293B]/50 rounded-xl p-4 hover:bg-[#1E293B]/80 transition-all duration-300"
-            onMouseEnter={() => handleHover(category.title)}
-            onMouseLeave={() => handleLeave(category.title)}
-            onClick={() => handleClick(category.title)}
-          >
-            {/* Category Header */}
-            <div className="flex justify-between items-center cursor-pointer">
-              <h3 className="text-lg font-semibold text-[#F97316]">
-                {category.title}
-              </h3>
-              <span
-                className={`text-sm transition-transform duration-300 ${
-                  activeCategory === category.title ? "rotate-90" : "rotate-0"
+        {skillCategories.map((category, index) => {
+          const isActive = activeCategory === category.title;
+          const isHovered = hoveredCategory === category.title;
+
+          const isOpen = isActive || isHovered;
+
+          return (
+            <div
+              key={index}
+              className={`w-full max-w-5xl border border-[#1E293B]/80 bg-[#1E293B]/50 rounded-xl p-4 transition-all duration-300 ${
+                isOpen ? "shadow-[0_0_20px_rgba(249,115,22,0.3)]" : ""
+              }`}
+              onMouseEnter={() => setHoveredCategory(category.title)}
+              onMouseLeave={() => setHoveredCategory(null)}
+              onClick={() => handleClick(category.title)}
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center cursor-pointer">
+                <h3 className="text-lg font-semibold text-[#F97316]">
+                  {category.title}
+                </h3>
+
+                {/* Animated Chevron */}
+                <IoChevronForward
+                  className={`text-lg transform transition-all duration-500 ${
+                    isOpen
+                      ? "rotate-90 text-[#F97316]"
+                      : "text-gray-400 group-hover:text-[#F97316]"
+                  }`}
+                />
+              </div>
+
+              {/* Skills */}
+              <div
+                className={`grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mt-4 overflow-hidden transition-all duration-500 ${
+                  isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                ▶
-              </span>
-            </div>
-
-            {/* Skill Icons */}
-            <div
-              className={`grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mt-4 overflow-hidden transition-all duration-500 ${
-                activeCategory === category.title
-                  ? "max-h-[400px] opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              {category.skills.map((skill, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center justify-center bg-[#0F172A] rounded-lg p-3 w-20 h-20 hover:scale-105 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all duration-300"
-                >
-                  <div className="text-xl text-[#F97316] mb-1">
-                    {skill.icon}
+                {category.skills.map((skill, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center justify-center bg-[#0F172A] rounded-lg p-3 w-20 h-20 hover:scale-105 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all duration-300"
+                  >
+                    <div className="text-xl text-[#F97316] mb-1">
+                      {skill.icon}
+                    </div>
+                    <p className="text-[0.7rem] text-gray-300 text-center">
+                      {skill.name}
+                    </p>
                   </div>
-                  <p className="text-[0.7rem] text-gray-300 text-center">
-                    {skill.name}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -6,11 +6,11 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen bg-[#0F172A] text-gray-200 px-6 md:px-20 pt-20 md:pt-24 gap-8 md:gap-16"
+      className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen bg-[#0F172A] text-gray-200 px-4 sm:px-6 md:px-20 pt-16 md:pt-24 gap-6 md:gap-16"
     >
       {/* Left Content */}
-      <div className="flex flex-col items-start gap-4 max-w-lg text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+      <div className="flex flex-col items-center md:items-start gap-4 max-w-md text-center md:text-left">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
           Gowtham V
         </h1>
 
@@ -32,13 +32,13 @@ export default function Hero() {
         </h2>
 
         {/* Short Description */}
-        <p className="text-gray-400 leading-relaxed text-[0.95rem] md:text-base">
+        <p className="text-gray-400 leading-relaxed text-sm sm:text-[0.95rem] md:text-base px-2 sm:px-0">
           I’m a passionate designer and developer who blends clean UI design
           with solid full-stack development to build modern digital experiences.
         </p>
 
         {/* Buttons */}
-        <div className="flex flex-wrap gap-4 mt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mt-6 w-full">
           <a
             href="#contact"
             className="bg-[#F97316] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(249,115,22,0.7)]"
@@ -61,7 +61,7 @@ export default function Hero() {
           <img
             src="/Hero.png"
             alt="Gowtham V"
-            className="w-full h-full object-cover object-top"
+            className="w-56 sm:w-64 md:w-[380px] rounded-2xl shadow-[0_0_25px_rgba(249,115,22,0.3)] object-contain"
           />
         </div>
       </div>
