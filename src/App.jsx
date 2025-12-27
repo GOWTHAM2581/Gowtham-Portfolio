@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Skills from "./components/Skills";
-import Experience from "./components/Experience";
-import Contact from "./components/Contact";
-import Services from "./components/Services";
-import Footer from "./components/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import AllProjects from "./pages/AllProjects";
 import DisableInspect from "./DisableInspect";
-import About from "./components/About";
-// import other sections...
 
 export default function App() {
   const [theme, setTheme] = useState("dark");
@@ -22,24 +16,24 @@ export default function App() {
     }
   }, [theme]);
 
+  // Pass theme props to pages so they can pass to Navbar if needed
+  // Note: AllProjects manages its own Navbar or we can wrap a Layout.
+  // For now, AllProjects has a specific implementation.
+
   return (
-    <div
-      className={`transition-colors duration-500 ${
-        theme === "dark"
+    <Router>
+      <div
+        className={`transition-colors duration-500 ${theme === "dark"
           ? "bg-[#0F172A] text-gray-200"
           : "bg-white text-gray-800"
-      }`}
-    >
-      <DisableInspect />
-      <Navbar theme={theme} setTheme={setTheme} />
-      <Hero />
-      <About />
-      {/* <Services /> */}
-      <Skills />
-      <Experience />
-      <Contact />
-      <Footer />
-      {/* Add other sections like Service, Contact, etc. */}
-    </div>
+          }`}
+      >
+        {/* <DisableInspect /> */}
+        <Routes>
+          <Route path="/" element={<Home theme={theme} setTheme={setTheme} />} />
+          <Route path="/projects" element={<AllProjects />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }

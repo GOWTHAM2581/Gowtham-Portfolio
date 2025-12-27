@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaDownload, FaBars, FaTimes } from "react-icons/fa";
 
 export default function Navbar() {
@@ -39,10 +40,25 @@ export default function Navbar() {
   }, []);
 
   // ✅ Handle smooth scroll + active update
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const handleClick = (name, href) => {
     setActiveSection(name);
     setIsOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+
+    if (location.pathname !== "/") {
+      navigate("/");
+      // Determine target element and scroll after navigation
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100); // Small delay to allow page load/render
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -53,11 +69,10 @@ export default function Navbar() {
           <li key={item.name}>
             <button
               onClick={() => handleClick(item.name, item.href)}
-              className={`px-3 py-1.5 rounded-full transition-all duration-300 ${
-                activeSection === item.name
-                  ? "bg-[#F97316] text-white shadow-[0_0_8px_rgba(249,115,22,0.6)]"
-                  : "hover:bg-[#F97316]/80 hover:text-white"
-              }`}
+              className={`px-3 py-1.5 rounded-full transition-all duration-300 ${activeSection === item.name
+                ? "bg-[#F97316] text-white shadow-[0_0_8px_rgba(249,115,22,0.6)]"
+                : "hover:bg-[#F97316]/80 hover:text-white"
+                }`}
             >
               {item.name}
             </button>
@@ -94,11 +109,10 @@ export default function Navbar() {
             <li key={item.name}>
               <button
                 onClick={() => handleClick(item.name, item.href)}
-                className={`block w-full text-center px-4 py-2 rounded-full transition-all duration-300 ${
-                  activeSection === item.name
-                    ? "bg-[#F97316] text-white"
-                    : "hover:bg-[#F97316]/80 hover:text-white"
-                }`}
+                className={`block w-full text-center px-4 py-2 rounded-full transition-all duration-300 ${activeSection === item.name
+                  ? "bg-[#F97316] text-white"
+                  : "hover:bg-[#F97316]/80 hover:text-white"
+                  }`}
               >
                 {item.name}
               </button>

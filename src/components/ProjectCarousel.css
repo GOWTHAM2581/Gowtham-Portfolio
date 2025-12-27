@@ -1,0 +1,33 @@
+/* Custom Pagination Styles */
+.swiper-pagination-bullet {
+    background: #475569 !important;
+    opacity: 0.5;
+    width: 8px;
+    height: 8px;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: #F97316 !important;
+    /* Orange Theme Color */
+    opacity: 1;
+    width: 24px;
+    border-radius: 999px;
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+}
+
+/* Ensure slides have proper layering */
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    /* transition: transform 0.3s ease; */
+    /* Swiper handles transition */
+}
+
+/* Shadow adjustments */
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+    background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0));
+    border-radius: 0.75rem;
+    /* Match rounded-xl */
+}
