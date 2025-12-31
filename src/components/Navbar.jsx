@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaDownload, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +12,7 @@ export default function Navbar() {
     // { name: "Service", href: "#service" },
     { name: "Skills", href: "#skills" },
     { name: "Experience", href: "#experience" },
+    { name: "My Projects", href: "/projects", isRoute: true },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -43,9 +44,15 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleClick = (name, href) => {
+  const handleClick = (name, href, isRoute) => {
     setActiveSection(name);
     setIsOpen(false);
+
+    // If it's a route (like /projects), navigate directly
+    if (isRoute) {
+      navigate(href);
+      return;
+    }
 
     if (location.pathname !== "/") {
       navigate("/");
@@ -68,7 +75,7 @@ export default function Navbar() {
         {menuItems.map((item) => (
           <li key={item.name}>
             <button
-              onClick={() => handleClick(item.name, item.href)}
+              onClick={() => handleClick(item.name, item.href, item.isRoute)}
               className={`px-3 py-1.5 rounded-full transition-all duration-300 ${activeSection === item.name
                 ? "bg-[#F97316] text-white shadow-[0_0_8px_rgba(249,115,22,0.6)]"
                 : "hover:bg-[#F97316]/80 hover:text-white"
@@ -78,18 +85,6 @@ export default function Navbar() {
             </button>
           </li>
         ))}
-
-        {/* Download CV */}
-        <li>
-          <a
-            href="/Gowtham Vasanthakumar Resume.pdf"
-            download
-            className="flex items-center gap-1 bg-[#F97316] text-white px-3 py-1.5 rounded-full text-sm hover:opacity-90 transition-all duration-300"
-          >
-            <FaDownload className="text-sm" />
-            <span>CV</span>
-          </a>
-        </li>
       </ul>
 
       {/* Mobile Menu Icon */}
@@ -108,7 +103,7 @@ export default function Navbar() {
           {menuItems.map((item) => (
             <li key={item.name}>
               <button
-                onClick={() => handleClick(item.name, item.href)}
+                onClick={() => handleClick(item.name, item.href, item.isRoute)}
                 className={`block w-full text-center px-4 py-2 rounded-full transition-all duration-300 ${activeSection === item.name
                   ? "bg-[#F97316] text-white"
                   : "hover:bg-[#F97316]/80 hover:text-white"
@@ -118,18 +113,6 @@ export default function Navbar() {
               </button>
             </li>
           ))}
-
-          {/* Download CV Button */}
-          <li>
-            <a
-              href="/Gowtham Resume._..pdf"
-              download
-              className="flex items-center gap-1 bg-[#F97316] text-white px-5 py-2 rounded-full text-sm hover:opacity-90 transition-all duration-300"
-            >
-              <FaDownload className="text-sm" />
-              <span>CV</span>
-            </a>
-          </li>
         </ul>
       )}
     </nav>
