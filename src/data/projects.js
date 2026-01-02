@@ -16,5 +16,12 @@ export const projectsData = [
     link: "https://doc-gpt-rag.vercel.app/",
     categories: ["Gen AI", "Full Stack"]
   },
-  // Add more projects here
+  {
+    id: 3,
+    title: "Refinery",
+    description: "An AI-powered prompt engineering tool that transforms basic thoughts into high-density architectural instructions.",
+    image: "/projects/prompt-live-page.PNG",
+    link: "https://prompt-refinary.vercel.app/",
+    categories: ["Gen AI", "Full Stack"]
+  },
 ];
